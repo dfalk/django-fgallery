@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load thumbnail %}
+
+{% block content %}
+
+{% for object in object_list %}
+
+    <p><a href="/media/{{ object.image }}"><img src="{% thumbnail object.image 128x128 %}"></a>
+
+{% endfor %}
+
+
+{% endblock %}
