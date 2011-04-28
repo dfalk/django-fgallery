@@ -4,9 +4,11 @@ from django.views.generic.list_detail import object_list
 
 urlpatterns = patterns('fgallery.views',
     url(r'^$', object_list, {'queryset': Album.objects.all()}, name='gallery'),
-    url(r'^add/$', 'album_add', name='album_add'),
     url(r'^(?P<album_id>\d+)/$', 'album_detail', name='gallery_one'),
-    url(r'^photos/$', object_list, {'queryset': Photo.objects.all()}, name='photo_all'),
-    url(r'^(?P<album_id>\d+)/upload/$', 'upload', name='gallery_upload'),
+    url(r'^add/$', 'album_add', name='album_add'),
+    url(r'^(?P<album_id>\d+)/upload/$', 'album_upload', name='gallery_upload'),
     url(r'^(?P<album_id>\d+)/edit/$', 'album_edit', name='gallery_edit'),
+    url(r'^(?P<album_id>\d+)/delete/$', 'album_delete', name='gallery_delete'),
+
+    url(r'^photos/$', object_list, {'queryset': Photo.objects.all()}, name='photo_all'),
 )

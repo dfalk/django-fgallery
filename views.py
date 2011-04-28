@@ -43,7 +43,11 @@ def album_edit(request, album_id):
     return direct_to_template(request, 'fgallery/album_add.html', {
         'form': form,
     })
-    
+
+def album_delete(request, album_id):
+    album = Album.objects.get(pk=album_id)
+    album.delete()
+    return HttpResponseRedirect('/gallery/')
 
 def handle_uploaded_file(f):
     destination = open(f, 'wb+')
@@ -51,7 +55,7 @@ def handle_uploaded_file(f):
         destination.write(chunk)
     destination.close()
 
-def upload(request, album_id):
+def album_upload(request, album_id):
     if request.method == 'POST': # If the form has been submitted...
         form = UploadAlbumForm(request.POST, request.FILES) # A form bound to the POST data
         if form.is_valid(): # All validation rules pass

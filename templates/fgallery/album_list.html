@@ -9,7 +9,7 @@
 
 {% for object in object_list %}
 
-    <p><a href="{% url gallery_one object.id %}">{{ object.title }}</a> (<a href="{% url gallery_edit object.id %}">edit</a> <a href="{% url gallery_upload object.id %}">upload</a>)
+    <p><a href="{% url gallery_one object.id %}">{{ object.title }}</a> (<a href="{% url gallery_edit object.id %}">edit</a> <a href="{% url gallery_upload object.id %}">upload</a> <a id="link" onclick="return confirm('Удалить объект?')" href="{% url gallery_delete object.id %}">delete</a>)
 
 {% endfor %}
 
