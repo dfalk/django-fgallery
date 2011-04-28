@@ -24,7 +24,7 @@ def album_add(request):
              album_obj.save()
         return HttpResponseRedirect('/gallery/')
     else:
-        form = NewAlbumForm()
+        form = AddAlbumForm()
     return direct_to_template(request, 'fgallery/album_add.html', {
         'form': form,
     })
