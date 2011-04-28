@@ -29,6 +29,22 @@ def album_add(request):
         'form': form,
     })
 
+def album_edit(request, album_id):
+    album = Album.objects.get(pk=album_id)
+    if request.method == 'POST':
+        form = AddAlbumForm(request.POST)
+        if form.is_valid():
+             album.title = form.cleaned_data['title']
+             album.slug = form.cleaned_data['slug']
+             album.save()
+             return HttpResponseRedirect('/gallery/')
+    else:
+        form = AddAlbumForm({'title':album.title,'slug':album.slug})
+    return direct_to_template(request, 'fgallery/album_add.html', {
+        'form': form,
+    })
+    
+
 def handle_uploaded_file(f):
     destination = open(f, 'wb+')
     for chunk in f.chunks():

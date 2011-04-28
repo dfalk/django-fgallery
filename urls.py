@@ -8,4 +8,5 @@ urlpatterns = patterns('fgallery.views',
     url(r'^(?P<album_id>\d+)/$', 'album_detail', name='gallery_one'),
     url(r'^photos/$', object_list, {'queryset': Photo.objects.all()}, name='photo_all'),
     url(r'^(?P<album_id>\d+)/upload/$', 'upload', name='gallery_upload'),
+    url(r'^(?P<album_id>\d+)/edit/$', 'album_edit', name='gallery_edit'),
 )
