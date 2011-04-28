@@ -22,7 +22,7 @@ def album_add(request):
              album_obj.title = form.cleaned_data['title']
              album_obj.slug = form.cleaned_data['slug']
              album_obj.save()
-        return HttpResponseRedirect('/gallery/')
+             return HttpResponseRedirect('/gallery/')
     else:
         form = AddAlbumForm()
     return direct_to_template(request, 'fgallery/album_add.html', {
