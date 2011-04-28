@@ -6,7 +6,7 @@ from django.shortcuts import render_to_response
 
 from django.core.files.base import ContentFile
 from django.http import HttpResponseRedirect
-from forms import UserUploadForm, AlbumForm
+from forms import UploadAlbumForm, AddAlbumForm
 from models import Photo, Album
 
 def album_detail(request, album_id):
@@ -15,7 +15,7 @@ def album_detail(request, album_id):
 
 def album_add(request):
     if request.method == 'POST':
-        form = AlbumForm(request.POST)
+        form = AddAlbumForm(request.POST)
         if form.is_valid():
              album_obj = Album()
              album_obj.author = request.user
@@ -24,7 +24,7 @@ def album_add(request):
              album_obj.save()
         return HttpResponseRedirect('/gallery/')
     else:
-        form = AlbumForm()
+        form = NewAlbumForm()
     return direct_to_template(request, 'fgallery/album_add.html', {
         'form': form,
     })
@@ -37,7 +37,7 @@ def handle_uploaded_file(f):
 
 def upload(request, album_id):
     if request.method == 'POST': # If the form has been submitted...
-        form = UserUploadForm(request.POST, request.FILES) # A form bound to the POST data
+        form = UploadAlbumForm(request.POST, request.FILES) # A form bound to the POST data
         if form.is_valid(): # All validation rules pass
             #handle_uploaded_file(request.FILES['file'])
 
@@ -51,8 +51,8 @@ def upload(request, album_id):
                 image_obj.save()
             return HttpResponseRedirect('/') # Redirect after POST
     else:
-        form = UserUploadForm() # An unbound form
+        form = UploadAlbumForm() # An unbound form
 
-    return direct_to_template(request, 'fgallery/upload.html', {
+    return direct_to_template(request, 'fgallery/album_upload.html', {
         'form': form,
     })
