@@ -3,6 +3,7 @@
 from django.views.generic.list_detail import object_list
 from django.views.generic.simple import direct_to_template
 from django.shortcuts import render_to_response
+from django.contrib.auth.decorators import login_required
 
 from django.core.files.base import ContentFile
 from django.http import HttpResponseRedirect
@@ -13,6 +14,7 @@ def album_detail(request, album_id):
     queryset = Photo.objects.filter(album__id__exact=album_id)
     return object_list(request, queryset)#, {'template':'fgallery/photo_list.html'})
 
+@login_required
 def album_add(request):
     if request.method == 'POST':
         form = AddAlbumForm(request.POST)
@@ -29,6 +31,7 @@ def album_add(request):
         'form': form,
     })
 
+@login_required
 def album_edit(request, album_id):
     album = Album.objects.get(pk=album_id)
     if request.method == 'POST':
@@ -44,6 +47,7 @@ def album_edit(request, album_id):
         'form': form,
     })
 
+@login_required
 def album_delete(request, album_id):
     album = Album.objects.get(pk=album_id)
     album.delete()
@@ -55,6 +59,7 @@ def handle_uploaded_file(f):
         destination.write(chunk)
     destination.close()
 
+@login_required
 def album_upload(request, album_id):
     if request.method == 'POST': # If the form has been submitted...
         form = UploadAlbumForm(request.POST, request.FILES) # A form bound to the POST data
@@ -64,7 +69,7 @@ def album_upload(request, album_id):
             if request.FILES.has_key('image'):
                 image_obj = Photo()
                 image_obj.author = request.user
-                image_obj.title = form.cleaned_data['title']
+                image_obj.title = request.FILES['image'].name
                 image_obj.album = Album.objects.get(pk=album_id)
                 image_obj.image.save(request.FILES['image'].name,\
                                     ContentFile(request.FILES['image'].read()))

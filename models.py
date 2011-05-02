@@ -15,6 +15,7 @@ class Album(models.Model):
     slug = models.SlugField(max_length=100)
 
 from PIL import Image
+from easy_thumbnails.files import get_thumbnailer
 import os
 import settings
 
@@ -49,3 +50,4 @@ class Photo(models.Model):
         image = Image.open(filename)
         image.thumbnail(size, Image.ANTIALIAS)
         image.save(filename, quality=90)
+        #self.image = get_thumbnailer(self.image).get_thumbnail(dict(size=size))
