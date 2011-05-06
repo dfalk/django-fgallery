@@ -19,6 +19,9 @@ from easy_thumbnails.files import get_thumbnailer
 import os
 import settings
 
+def get_image_path(instance, filename):
+    return os.path.join('photos', str(instance.album.slug), filename)
+
 class Photo(models.Model):
     author = models.ForeignKey(User, blank=True, null=True)
     is_published = models.BooleanField(default=True)
@@ -28,7 +31,7 @@ class Photo(models.Model):
     album = models.ForeignKey(Album, blank=True, null=True)
     title = models.CharField(max_length=100, blank=True, null=True)
     # TODO: dynamic upload to
-    image = models.ImageField(upload_to='photos/')
+    image = models.ImageField(upload_to=get_image_path)
 
     is_cover = models.BooleanField(default=False)
     # TODO: js sortable
