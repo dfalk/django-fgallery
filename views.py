@@ -85,3 +85,4 @@ def album_upload(request, album_id):
     return direct_to_template(request, 'fgallery/album_upload.html', {
         'formset': formset,
     })
+

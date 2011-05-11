@@ -3,7 +3,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 from datetime import datetime
-from easy_thumbnails.fields import ThumbnailerImageField
 
 class Album(models.Model):
     author = models.ForeignKey(User)
@@ -15,7 +14,7 @@ class Album(models.Model):
     slug = models.SlugField(max_length=100)
 
 from PIL import Image
-from easy_thumbnails.files import get_thumbnailer
+#from easy_thumbnails.files import get_thumbnailer
 import os
 import settings
 
@@ -30,7 +29,6 @@ class Photo(models.Model):
 
     album = models.ForeignKey(Album, blank=True, null=True)
     title = models.CharField(max_length=100, blank=True, null=True)
-    # TODO: dynamic upload to
     image = models.ImageField(upload_to=get_image_path)
 
     is_cover = models.BooleanField(default=False)
@@ -48,7 +46,6 @@ class Photo(models.Model):
 
         super(Photo, self).save()
 
-        # TODO: save to album dir
         filename = settings.MEDIA_ROOT + self.image.name
         image = Image.open(filename)
         image.thumbnail(size, Image.ANTIALIAS)
