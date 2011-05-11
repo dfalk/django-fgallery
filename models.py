@@ -20,7 +20,7 @@ import os
 import settings
 
 def get_image_path(instance, filename):
-    return os.path.join('photos', str(instance.album.slug), filename)
+    return os.path.join('gallery', str(instance.album.slug), filename)
 
 class Photo(models.Model):
     author = models.ForeignKey(User, blank=True, null=True)
