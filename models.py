@@ -51,3 +51,9 @@ class Photo(models.Model):
         image.thumbnail(size, Image.ANTIALIAS)
         image.save(filename, quality=90)
         #self.image = get_thumbnailer(self.image).get_thumbnail(dict(size=size))
+
+    def rotate(self, angle=90):
+        filename = settings.MEDIA_ROOT + self.image.name
+        image = Image.open(filename)
+        image = image.rotate(angle, expand=True)
+        image.save(filename, quality=90)

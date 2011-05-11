@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from django.views.generic.list_detail import object_list
+from django.views.generic.list_detail import object_list, object_detail
 from django.views.generic.simple import direct_to_template
 from django.shortcuts import render_to_response
 from django.contrib.auth.decorators import login_required
@@ -86,3 +86,15 @@ def album_upload(request, album_id):
         'formset': formset,
     })
 
+def photo_detail(request, album_id, photo_id):
+    queryset = Photo.objects.all()
+    return object_detail(request, queryset=queryset, object_id=photo_id)
+
+@login_required
+def photo_rotate(request, album_id, photo_id, angle_opt):
+    photo = Photo.objects.get(pk=photo_id)
+    if angle_opt == 0:
+        photo.rotate(90)
+    else:
+        photo.rotate(-90)
+    return HttpResponseRedirect('/') # Redirect after POST
