@@ -5,4 +5,4 @@ class AddAlbumForm(forms.Form):
     slug = forms.SlugField(max_length=50)
 
 class UploadAlbumForm(forms.Form):
-    image = forms.ImageField()
+    image = forms.ImageField(required=False)

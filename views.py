@@ -59,25 +59,29 @@ def handle_uploaded_file(f):
         destination.write(chunk)
     destination.close()
 
+from django.forms.formsets import formset_factory
+
 @login_required
 def album_upload(request, album_id):
+    UploadFormSet = formset_factory(UploadAlbumForm, extra=5)
     if request.method == 'POST': # If the form has been submitted...
-        form = UploadAlbumForm(request.POST, request.FILES) # A form bound to the POST data
-        if form.is_valid(): # All validation rules pass
+        #form = UploadAlbumForm(request.POST, request.FILES) # A form bound to the POST data
+        formset = UploadFormSet(request.POST, request.FILES)
+        if formset.is_valid(): # All validation rules pass
             #handle_uploaded_file(request.FILES['file'])
-
-            if request.FILES.has_key('image'):
-                image_obj = Photo()
-                image_obj.author = request.user
-                image_obj.title = request.FILES['image'].name
-                image_obj.album = Album.objects.get(pk=album_id)
-                image_obj.image.save(request.FILES['image'].name,\
-                                    ContentFile(request.FILES['image'].read()))
-                image_obj.save()
+            for form in formset.forms:
+                if form.cleaned_data:
+                    image_obj = Photo()
+                    image_obj.author = request.user
+                    image_obj.title = form.cleaned_data['image'].name
+                    image_obj.album = Album.objects.get(pk=album_id)
+                    image_obj.image.save(form.cleaned_data['image'].name, ContentFile(form.cleaned_data['image'].read()))
+                    image_obj.save()
             return HttpResponseRedirect('/') # Redirect after POST
     else:
-        form = UploadAlbumForm() # An unbound form
+        #form = UploadAlbumForm() # An unbound form
+        formset = UploadFormSet()
 
     return direct_to_template(request, 'fgallery/album_upload.html', {
-        'form': form,
+        'formset': formset,
     })

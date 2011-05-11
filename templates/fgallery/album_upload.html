@@ -3,7 +3,10 @@
 {% block content %}
 
 <form method="post" action="{{ request.path }}" enctype="multipart/form-data">{% csrf_token %}
+{{ formset.management_form }}
+{% for form in formset.forms %}
 {{ form.as_p }}
+{% endfor %}
 <input type="submit" value="Upload" />
 </form>
 
