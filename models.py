@@ -63,5 +63,5 @@ class Photo(models.Model):
     def rotate(self, angle=90):
         filename = settings.MEDIA_ROOT + self.image.name
         image = Image.open(filename)
-        image = image.rotate(angle, expand=True)
+        image = image.rotate(angle)
         image.save(filename, quality=90)
