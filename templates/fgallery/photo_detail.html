@@ -5,7 +5,7 @@
 
 <p><img src="{% thumbnail object.image 640x640 %}">
 <p>
-<a href="/gallery/{{ object.album.id }}/{{ object.id }}/rotate/1/">rotate left</a>
-<a href="/gallery/{{ object.album.id }}/{{ object.id }}/rotate/0/">rotate right</a>
+<a href="{% url photo_rotate object.album.id object.id 1 %}">rotate left</a>
+<a href="{% url photo_rotate object.album.id object.id 0 %}">rotate right</a>
 
 {% endblock %}

@@ -13,6 +13,10 @@ class Album(models.Model):
     title = models.CharField(max_length=100)
     slug = models.SlugField(max_length=100)
 
+    @models.permalink
+    def get_absolute_url(self):
+        return ('album_detail',[str(self.id)])
+
 from PIL import Image
 #from easy_thumbnails.files import get_thumbnailer
 import os
@@ -51,6 +55,10 @@ class Photo(models.Model):
         image.thumbnail(size, Image.ANTIALIAS)
         image.save(filename, quality=90)
         #self.image = get_thumbnailer(self.image).get_thumbnail(dict(size=size))
+
+    @models.permalink
+    def get_absolute_url(self):
+        return ('photo_detail',[str(self.album.id),str(self.id)])
 
     def rotate(self, angle=90):
         filename = settings.MEDIA_ROOT + self.image.name
