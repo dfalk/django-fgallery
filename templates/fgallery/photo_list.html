@@ -1,13 +1,16 @@
-{% extends 'base.html' %}
+{% extends 'fgallery/base_gallery.html' %}
 {% load thumbnail %}
 
+{% block title %}{{ album.title }} | {{ block.super }}{% endblock %}
+
+{% block breadcrumbs %} - <a href="{% url gallery_index %}">Галерея</a> - Альбом{% endblock %}
+
 {% block content %}
+<h1>{{ album.title }}</h1>
+
+<p><a href="{% url album_edit album.id %}">edit</a> <a id="link" onclick="return confirm('Удалить объект?')" href="{% url album_delete album.id %}">delete</a></p>
 
 {% for object in object_list %}
-
-    <p><a href="{{ object.get_absolute_url }}"><img src="{% thumbnail object.image 128x128 %}"></a>
-
+    <a href="{{ object.get_absolute_url }}"><img src="{% thumbnail object.image 128x128 %}"></a>
 {% endfor %}
-
-
 {% endblock %}

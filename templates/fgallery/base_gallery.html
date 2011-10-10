@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% load thumbnail %}
+
+{% block title %}Галерея{% endblock %}
+
+{% block extrahead %}
+{{ block.super }}
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/fgallery.css" />
+{% endblock %}
+
+{% block breadcrumbs %} - Галерея{% endblock %}
+
+{% block sidebar %}
+<!--<h2>Меню блога</h2>-->
+<ul id="gallery-sidemenu">
+
+    {% if user.is_staff %}<li id="gallery-admin"><h3>Администрирование</h3>
+        <ul>
+        <li><a href="{% url album_new %}">Добавить альбом</a></li>
+        </ul>
+    </li>{% endif %}
+
+</ul><!-- /blog-sidemenu -->
+{% endblock %}
+

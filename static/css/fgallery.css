@@ -1,0 +1,12 @@
+/* ============================ GALLERY =========================== */
+
+#gallery-albums {
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+}
+
+#gallery-albums li {
+    margin: 0px;
+    margin-bottom: 10px;
+}

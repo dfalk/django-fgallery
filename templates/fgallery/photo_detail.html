@@ -1,11 +1,17 @@
-{% extends 'base.html' %}
+{% extends 'fgallery/base_gallery.html' %}
 {% load thumbnail %}
 
-{% block content %}
+{% block title %}{% if object.title %}{{ object.title }} | {% endif %}{{ object.album.title }} | {{ block.super }}{% endblock %}
 
-<p><img src="{% thumbnail object.image 640x640 %}">
+{% block breadcrumbs %} - <a href="{% url gallery_index %}">Галерея</a> - <a href="{% url album_detail object.album.id %}">Альбом</a> - Фото{% endblock %}
+
+{% block content %}
+<h1>{{ object.title }}</h1>
+
+<p><img src="{% thumbnail object.image 640x640 %}"></p>
 <p>
-<a href="{% url photo_rotate object.album.id object.id 1 %}">rotate left</a>
+<a href="{% url photo_rotate object.album.id object.id 1 %}">rotate left</a>, 
 <a href="{% url photo_rotate object.album.id object.id 0 %}">rotate right</a>
+</p>
 
 {% endblock %}
