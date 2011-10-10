@@ -8,9 +8,11 @@
 {% block content %}
 <h1>{{ album.title }}</h1>
 
-<p><a href="{% url album_edit album.id %}">edit</a> <a id="link" onclick="return confirm('Удалить объект?')" href="{% url album_delete album.id %}">delete</a></p>
-
+<div id="album-tools"><a href="{% url album_edit album.id %}">edit</a></div>
+<br />
+<div id="album-photos">
 {% for object in object_list %}
-    <a href="{{ object.get_absolute_url }}"><img src="{% thumbnail object.image 128x128 %}"></a>
+    <a href="{{ object.get_absolute_url }}"><img src="{% thumbnail object.image 128x128 %}" /></a>
 {% endfor %}
+</div>
 {% endblock %}

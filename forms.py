@@ -6,7 +6,7 @@ from django import forms
 from django.forms.formsets import formset_factory
 from django.forms.models import inlineformset_factory
 from fgallery.models import Album, Photo
-from fstyle.widgets import AdminImageWidget
+from fgallery.widgets import AdminImageWidget
 
 class AlbumForm(forms.ModelForm):
 

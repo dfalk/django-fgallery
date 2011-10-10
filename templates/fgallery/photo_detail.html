@@ -1,5 +1,5 @@
 {% extends 'fgallery/base_gallery.html' %}
-{% load thumbnail %}
+{% load fgallery_tags thumbnail %}
 
 {% block title %}{% if object.title %}{{ object.title }} | {% endif %}{{ object.album.title }} | {{ block.super }}{% endblock %}
 
@@ -8,10 +8,32 @@
 {% block content %}
 <h1>{{ object.title }}</h1>
 
-<p><img src="{% thumbnail object.image 640x640 %}"></p>
-<p>
+<div id="photo-detail">
+<div><img src="{% thumbnail object.image 640x480 %}"></div>
+<div id="photo-tools">
 <a href="{% url photo_rotate object.album.id object.id 1 %}">rotate left</a>, 
-<a href="{% url photo_rotate object.album.id object.id 0 %}">rotate right</a>
-</p>
+<a href="{% url photo_rotate object.album.id object.id 0 %}">rotate right</a>,
+<a href="{% url album_setcover object.album.id object.id %}">set cover</a> {% if object.is_cover %}(да){% endif %}
+</div>
+<br />
+<div id="photo-small">
+<a href="#show" id="photo-small-show">Показать уменьшенную копию</a>
+<div id="photo-small-hidden">
+<img src="{% thumbnail object.image 320x240 %}" />
+<div>HTML-код для вставки в блог<br />
+<textarea style="width: 600px"><a href="{{ object.get_absolute_url }}"><img id="{{ object|class_name }}-id-{{ object.id }}" class="blog-imgline" src="{% thumbnail object.image 320x240 %}" /></a></textarea>
+</div>
+</div>
+</div><!-- /#photo-small -->
+</div><!-- /#photo-detail -->
+
+<script>
+$(document).ready(function(){
+    $("#photo-small-hidden").hide();
+    $("#photo-small-show").click(function(){
+        $("#photo-small-hidden").toggle();
+    });
+});
+</script>
 
 {% endblock %}

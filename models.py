@@ -21,6 +21,20 @@ class Album(models.Model):
     publish = models.DateTimeField(default=datetime.now)
     enable_comments = models.BooleanField(default=True)
 
+    def __unicode__(self):
+        dt = unicode(self.publish)[:10]
+        return "[%s] %s" % (dt, self.title)
+
+    def get_cover_image(self):
+        """ Get cover or first image """
+        covers = self.photo_set.filter(is_cover=True)[:1]
+        if len(covers) > 0:
+            cover = covers[0].image
+            return cover
+        else:
+            first_image = self.photo_set.all()[0]
+            return first_image.image
+
     @models.permalink
     def get_absolute_url(self):
         return ('album_detail',[self.id])
@@ -56,6 +70,9 @@ class Photo(models.Model):
         image.thumbnail(size, Image.ANTIALIAS)
         image.save(filename, quality=95)
         #self.image = get_thumbnailer(self.image).get_thumbnail(dict(size=size))
+
+    def __unicode__(self):
+        return "[%s-%s] %s" % (self.album.id, self.id, self.title)
 
     @models.permalink
     def get_absolute_url(self):
