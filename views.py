@@ -41,7 +41,7 @@ def album_edit(request, album_id=None):
         forma = AlbumForm(instance=album)
         formset = EditPhotoFormSet(instance=album)
     return direct_to_template(request, 'fgallery/album_new.html', {
-        'forma': forma, 'formset': formset
+        'forma': forma, 'formset': formset, 'album': album
     })
 
 @login_required

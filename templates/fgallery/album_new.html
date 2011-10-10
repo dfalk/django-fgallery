@@ -1,17 +1,17 @@
 {% extends 'fgallery/base_gallery.html' %}
 
-{% block title %}Новый альбом | {{ block.super }}{% endblock %}
+{% block title %}{% if album %}Редактирование альбома{% else %}Новый альбом{% endif %} | {{ block.super }}{% endblock %}
 
 {% block extrahead %}
 {{ block.super }}
 <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.formset.min.js"></script>
 {% endblock %}
 
-{% block breadcrumbs %} - <a href="{% url gallery_index %}">Галерея</a> - Новый альбом{% endblock %}
+{% block breadcrumbs %} - <a href="{% url gallery_index %}">Галерея</a> - {% if album %}<a href="{{ album.get_absolute_url }}">Альбом</a> - Редактирование{% else %}Новый альбом{% endif %}{% endblock %}
 
 {% block contentclass %}gallery-album{% endblock %}
 {% block content %}
-<h1>Новый альбом</h1>
+<h1>{% if album %}Редактирование альбома{% else %}Новый альбом{% endif %}</h1>
 
 <form method="post" action="" enctype="multipart/form-data">{% csrf_token %}
 {{ forma.as_p }}
